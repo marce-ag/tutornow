@@ -27,5 +27,5 @@ npm install express mysql express-myconnection morgan ejs
 ## Repositorio GitHub
 
 Repositorio público del proyecto:  
-https://github.com/marce-AG2/tutornow
+https://github.com/marce-ag/tutornow.git
 
