@@ -5,7 +5,6 @@
   <title>TutorNow - Plataforma de tutorías</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* Estilos copiados de tu código original, asegurando que los selectores funcionen */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -22,6 +21,7 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      gap: 20px;
     }
     .brand {
       display: flex;
@@ -40,13 +40,19 @@
       justify-content: center;
       font-size: 18px;
     }
-    nav a, nav span {
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex: 1;
+      justify-content: flex-end;
+    }
+    .nav-links a, .nav-links span {
       color: #fff;
-      margin-left: 18px;
       text-decoration: none;
       font-size: 0.95rem;
     }
-    nav a:hover {
+    .nav-links a:hover {
       text-decoration: underline;
     }
     .btn-outline {
@@ -61,37 +67,182 @@
       border-radius: 999px;
       font-weight: 600;
     }
-    .hero { max-width: 1100px; margin: 40px auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; padding: 0 20px; align-items: center; }
-    .hero-title { font-size: 2.4rem; color: #20244f; margin-bottom: 14px; }
+
+    .user-badge {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff22;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+    .user-email {
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .btn-logout {
+      background: transparent;
+      border: 1px solid #fff;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 30px;
+      padding: 0 20px;
+      align-items: center;
+    }
+    .hero-title {
+      font-size: 2.4rem;
+      color: #20244f;
+      margin-bottom: 14px;
+    }
     .hero-title span { color: #4b5dff; }
-    .hero-subtitle { font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; color: #555; }
-    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
-    .badge { background: #e5e7ff; color: #333; padding: 6px 12px; border-radius: 999px; font-size: 0.8rem; }
+    .hero-subtitle {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .badge {
+      background: #e5e7ff;
+      color: #333;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+    }
     .hero-actions { display: flex; gap: 12px; margin-bottom: 12px; }
-    .hero-btn-primary { background: #4b5dff; color: #fff; padding: 10px 20px; border-radius: 999px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; }
-    .hero-btn-secondary { background: transparent; color: #4b5dff; padding: 10px 20px; border-radius: 999px; border: 1px solid #4b5dff; cursor: pointer; font-size: 0.95rem; }
+    .hero-btn-primary {
+      background: #4b5dff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .hero-btn-secondary {
+      background: transparent;
+      color: #4b5dff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid #4b5dff;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
     .hero-small { font-size: 0.85rem; color: #777; }
-    .hero-card { background: #ffffff; border-radius: 18px; box-shadow: 0 10px 30px rgba(49, 61, 153, 0.15); padding: 20px 22px; }
+    .hero-card {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(49, 61, 153, 0.15);
+      padding: 20px 22px;
+    }
     .card-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; color: #20244f; }
     .card-sub { font-size: 0.85rem; color: #777; margin-bottom: 16px; }
-    .stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-bottom: 16px; }
-    .stat-box { background: #f5f7ff; padding: 10px; border-radius: 12px; font-size: 0.8rem; }
-    .stat-number { font-size: 1.2rem; font-weight: 700; color: #4b5dff; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .stat-box {
+      background: #f5f7ff;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+    .stat-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #4b5dff;
+    }
     .stat-label { color: #555; }
-    .banner-pill { background: #fffbef; border-radius: 12px; padding: 10px 12px; font-size: 0.8rem; border: 1px dashed #ffd27f; display: flex; align-items: center; gap: 8px; }
-    .section { max-width: 1100px; margin: 10px auto 40px; padding: 0 20px 10px; }
-    .section h2 { color: #20244f; font-size: 1.5rem; margin-bottom: 10px; }
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 10px; }
-    .subject-card { background: #ffffff; border-radius: 14px; padding: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-size: 0.9rem; }
-    .subject-card h3 { margin-bottom: 6px; color: #4b5dff; }
-    .subject-card p { color: #555; margin-bottom: 6px; }
-    .subject-tag { font-size: 0.75rem; background: #f0f1ff; padding: 3px 8px; border-radius: 999px; display: inline-block; }
-    footer { text-align: center; padding: 16px; font-size: 0.8rem; color: #777; border-top: 1px solid #e3e6ff; margin-top: 20px; }
+    .banner-pill {
+      background: #fffbef;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      border: 1px dashed #ffd27f;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section {
+      max-width: 1100px;
+      margin: 10px auto 40px;
+      padding: 0 20px 10px;
+    }
+    .section h2 {
+      color: #20244f;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .subject-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-size: 0.9rem;
+    }
+    .subject-card h3 {
+      margin-bottom: 6px;
+      color: #4b5dff;
+    }
+    .subject-card p {
+      color: #555;
+      margin-bottom: 6px;
+    }
+    .subject-tag {
+      font-size: 0.75rem;
+      background: #f0f1ff;
+      padding: 3px 8px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.8rem;
+      color: #777;
+      border-top: 1px solid #e3e6ff;
+      margin-top: 20px;
+    }
 
     @media (max-width: 820px) {
+      header {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      .user-badge { order: 2; }
       .hero { grid-template-columns: 1fr; }
-      header { flex-direction: column; align-items: flex-start; gap: 8px; }
-      nav { width: 100%; display: flex; justify-content: flex-end; }
     }
   </style>
 </head>
@@ -101,12 +252,18 @@
       <div class="logo-circle">📚</div>
       <span>TutorNow</span>
     </div>
-    <nav id="mainNav">
+
+    <nav id="mainNav" class="nav-links">
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#materias">Materias</a>
-      <a href="/login" class="btn-outline">Iniciar sesión</a>
-      <a href="/login#registro" class="btn-filled">Crear cuenta</a>
+      <a href="/login" class="btn-outline auth-link">Iniciar sesión</a>
+      <a href="/login#registro" class="btn-filled auth-link">Crear cuenta</a>
     </nav>
+
+    <div id="userBadge" class="user-badge">
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn-logout" id="btnLogout">Salir</button>
+    </div>
   </header>
 
   <main>
@@ -124,7 +281,7 @@
           <span class="badge">💻 Sesiones 100% en línea</span>
           <span class="badge">📆 Agenda flexible</span>
         </div>
-        
+
         <div id="heroActions">
           <div class="hero-actions">
             <button class="hero-btn-primary" onclick="window.location.href='/login#registro'">
@@ -134,13 +291,7 @@
               Ya tengo cuenta
             </button>
           </div>
-          <p class="hero-small">
-            También puedes gestionar tus clientes desde el panel de administración:
-            <a href="/clientes">ver CRUD de clientes</a>
-            (para la práctica).
-          </p>
         </div>
-        
       </div>
 
       <aside class="hero-card">
@@ -203,51 +354,54 @@
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const userEmail = localStorage.getItem('loggedInUserEmail');
-        const userRol = localStorage.getItem('loggedInUserRol');
-        const mainNav = document.getElementById('mainNav');
-        const heroActions = document.getElementById('heroActions'); 
+  const userEmailSpan = document.getElementById('userEmail');
+  const userBadge = document.getElementById('userBadge');
+  const btnLogout = document.getElementById('btnLogout');
+  const heroActions = document.getElementById('heroActions');
+  const authLinks = document.querySelectorAll('.auth-link');
 
-       
-        const renderNav = (isLoggedIn, email) => {
-            if (isLoggedIn) {
-                
-                const namePart = email.split('@')[0]; 
-                return `
-                    <a href="#como-funciona">Cómo funciona</a>
-                    <a href="#materias">Materias</a>
-                    <span style="color: #fff; margin-left: 18px; font-size: 0.95rem;">Hola, ${namePart}</span>
-                    <a href="#" id="logoutBtn" class="btn-filled">Cerrar Sesión</a>
-                `;
-            } else {
-                return `
-                    <a href="#como-funciona">Cómo funciona</a>
-                    <a href="#materias">Materias</a>
-                    <a href="/login" class="btn-outline">Iniciar sesión</a>
-                    <a href="/login#registro" class="btn-filled">Crear cuenta</a>
-                `;
-            }
-        };
+  const storedEmail = localStorage.getItem('tutornowUserEmail');
+  const storedName  = localStorage.getItem('tutornowUserName');
+  const userToken   = localStorage.getItem('tutornowToken');
 
-        
-        mainNav.innerHTML = renderNav(userEmail, userEmail);
+  if (storedEmail && userToken) {
+   
+    let displayName = '';
 
-        
-        if (userEmail && heroActions) {
-            heroActions.style.display = 'none';
-        }
-
+    if (storedName && storedName !== 'undefined' && storedName.trim() !== '') {
     
-        if (userEmail) {
-            document.getElementById('logoutBtn').addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.removeItem('loggedInUserEmail');
-                localStorage.removeItem('loggedInUserRol');
-                window.location.href = '/'; 
-            });
-        }
+      displayName = storedName;
+    } else {
+     
+      const beforeAt = storedEmail.split('@')[0];     
+      displayName = beforeAt.replace(/\./g, ' ');      
+    }
+
+
+    userBadge.style.display = 'flex';
+    userEmailSpan.textContent = 'Hola, ' + displayName;
+
+    authLinks.forEach(el => el.style.display = 'none');
+
+    if (heroActions) {
+      heroActions.style.display = 'none';
+    }
+
+   
+    btnLogout.addEventListener('click', () => {
+      localStorage.removeItem('tutornowUserEmail');
+      localStorage.removeItem('tutornowUserName');
+      localStorage.removeItem('tutornowUserRol');
+      localStorage.removeItem('tutornowToken');
+      window.location.href = '/';
     });
-  </script>
+  } else {
+    userBadge.style.display = 'none';
+    authLinks.forEach(el => el.style.display = 'inline-block');
+    if (heroActions) {
+      heroActions.style.display = 'block';
+    }
+  }
+</script>
 </body>
 </html>

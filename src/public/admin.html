@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel Admin - TutorNow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #4b5dff 0, #20244f 40%, #0f1429 100%);
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ================= HEADER SUPERIOR ================= */
+
+    .topbar {
+      width: 100%;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      background: rgba(10,12,40,0.9);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffb347, #ff6b6b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .brand-title {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-title span:first-child {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .brand-title span:last-child {
+      font-size: 0.75rem;
+      color: #c7cbff;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+
+    .pill-env {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #c7cbff;
+    }
+
+    .btn-home {
+      border-radius: 999px;
+      border: none;
+      background: #ffb347;
+      color: #20244f;
+      padding: 7px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+
+    .btn-home:hover {
+      filter: brightness(1.05);
+    }
+
+    /* ================= LAYOUT PRINCIPAL ================= */
+
+    .admin-wrapper {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      max-width: 1180px;
+      width: 100%;
+      margin: 18px auto 26px;
+      padding: 0 18px;
+      gap: 18px;
+    }
+
+    /* ================= SIDEBAR ================= */
+
+    .sidebar {
+      background: rgba(17, 23, 75, 0.95);
+      color: #fff;
+      border-radius: 18px;
+      padding: 18px 16px 22px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sidebar h1 {
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .sidebar small {
+      font-size: 0.75rem;
+      color: #c3c7ff;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .menu button {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      color: #e5e7ff;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s, transform 0.05s;
+    }
+
+    .menu button span.icon {
+      font-size: 1rem;
+    }
+
+    .menu button.active,
+    .menu button:hover {
+      background: linear-gradient(135deg, #4b5dff, #8f94ff);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.75rem;
+      color: #9ca0ff;
+    }
+
+    /* ================= CONTENIDO MAIN ================= */
+
+    .main {
+      background: #f5f7ff;
+      border-radius: 22px;
+      padding: 18px 20px 22px;
+      box-shadow: 0 16px 40px rgba(3,7,30,0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .main-header h2 {
+      font-size: 1.3rem;
+      color: #20244f;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      background: #e5e7ff;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #555;
+    }
+
+    .subtitle-main {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px 16px 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom: 8px;
+    }
+
+    .panel h3 {
+      font-size: 1rem;
+      color: #20244f;
+      margin-bottom: 4px;
+    }
+
+    .panel small {
+      font-size: 0.75rem;
+      color: #777;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+
+    form input {
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5ff;
+      font-size: 0.9rem;
+      min-width: 150px;
+    }
+
+    form input:focus {
+      outline: none;
+      border-color: #4b5dff;
+      box-shadow: 0 0 0 2px rgba(75,93,255,0.16);
+    }
+
+    form button {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: none;
+      background: #4b5dff;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 6px 14px rgba(75,93,255,0.35);
+    }
+
+    form button:hover {
+      filter: brightness(1.05);
+    }
+
+    .info {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid #eceefe;
+    }
+
+    th {
+      background: #edf0ff;
+      font-weight: 600;
+      color: #434776;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fafbff;
+    }
+
+    tbody tr:hover {
+      background: #eef1ff;
+    }
+
+    .actions {
+      white-space: nowrap;
+    }
+
+    .actions button {
+      margin-right: 4px;
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-edit { background: #ffe082; }
+    .btn-delete { background: #ff8a80; }
+
+    .hidden { display: none; }
+
+    @media (max-width: 960px) {
+      .admin-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .sidebar-footer {
+        max-width: 180px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .admin-wrapper {
+        padding: 0 10px;
+      }
+      form input {
+        min-width: 100px;
+        flex: 1 1 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- BARRA SUPERIOR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo-circle">📚</div>
+      <div class="brand-title">
+        <span>TutorNow</span>
+        <span>Panel de administración</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-home" onclick="window.location.href='/'">
+        ← Volver a TutorNow
+      </button>
+    </div>
+  </header>
+
+  <div class="admin-wrapper">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div>
+        <h1>Admin TutorNow</h1>
+      </div>
+
+      <div class="menu">
+        <button class="active" id="btnClientes">
+          <span class="icon">👥</span> Clientes
+        </button>
+        <button id="btnTutores">
+          <span class="icon">🧑‍🏫</span> Tutores
+        </button>
+        <button id="btnMaterias">
+          <span class="icon">📘</span> Materias
+        </button>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main">
+      <div class="main-header">
+        <div>
+          <h2 id="tituloPanel">Catálogo de clientes</h2>
+          <p class="subtitle-main">
+            Visualiza, agrega, actualiza y elimina registros directamente desde el navegador.
+          </p>
+        </div>
+        <span class="badge">URL: http://localhost:8080/admin</span>
+      </div>
+
+      <!-- PANEL CLIENTES -->
+      <section class="panel" id="panelClientes">
+        <h3>Clientes</h3>
+        <small>Estudiantes registrados en TutorNow.</small>
+        <form id="clienteForm">
+          <input type="hidden" id="clienteId" />
+          <input type="text" id="nombreInput" placeholder="Nombre completo" required />
+          <input type="email" id="emailInput" placeholder="Email" required />
+          <input type="text" id="telefonoInput" placeholder="Teléfono" />
+          <button type="submit">Guardar</button>
+        </form>
+        <div class="info" id="infoClientes">Completa el formulario para agregar un cliente.</div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre completo</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyClientes"></tbody>
+        </table>
+      </section>
+
+      <!-- PANEL TUTORES -->
+      <section class="panel hidden" id="panelTutores">
+        <h3>Tutores</h3>
+        <small>Profesores disponibles para dar tutorías.</small>
+        <form id="tutorForm">
+          <input type="hidden" id="tutorId" />
+          <input type="text" id="tutorNombre" placeholder="Nombre completo" required />
+          <input type="email" id="tutorEmail" placeholder="Email" required />
+          <input type="text" id="tutorTelefono" placeholder="Teléfono" />
+          <input type="text" id="tutorPrecio" placeholder="Precio por hora" />
+          <input type="text" id="tutorDesc" placeholder="Descripción corta" />
+          <button type="submit">Guardar</button>
+        </form>
+        <div class="info" id="infoTutores">Administra tus tutores.</div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Precio/hora</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyTutores"></tbody>
+        </table>
+      </section>
+
+      <!-- PANEL MATERIAS -->
+      <section class="panel hidden" id="panelMaterias">
+        <h3>Materias</h3>
+        <small>Catálogo de materias impartidas en TutorNow.</small>
+        <form id="materiaForm">
+          <input type="hidden" id="materiaId" />
+          <input type="text" id="materiaNombre" placeholder="Nombre de la materia" required />
+          <input type="text" id="materiaDesc" placeholder="Descripción" />
+          <button type="submit">Guardar</button>
+        </form>
+        <div class="info" id="infoMaterias">Materias disponibles en TutorNow.</div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyMaterias"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script>
+
+    const btnClientes = document.getElementById('btnClientes');
+    const btnTutores = document.getElementById('btnTutores');
+    const btnMaterias = document.getElementById('btnMaterias');
+
+    const panelClientes = document.getElementById('panelClientes');
+    const panelTutores = document.getElementById('panelTutores');
+    const panelMaterias = document.getElementById('panelMaterias');
+    const tituloPanel = document.getElementById('tituloPanel');
+
+    function activarPanel(panel) {
+      panelClientes.classList.add('hidden');
+      panelTutores.classList.add('hidden');
+      panelMaterias.classList.add('hidden');
+
+      btnClientes.classList.remove('active');
+      btnTutores.classList.remove('active');
+      btnMaterias.classList.remove('active');
+
+      if (panel === 'clientes') {
+        panelClientes.classList.remove('hidden');
+        btnClientes.classList.add('active');
+        tituloPanel.textContent = 'Catálogo de clientes';
+        cargarClientes();
+      } else if (panel === 'tutores') {
+        panelTutores.classList.remove('hidden');
+        btnTutores.classList.add('active');
+        tituloPanel.textContent = 'Catálogo de tutores';
+        cargarTutores();
+      } else if (panel === 'materias') {
+        panelMaterias.classList.remove('hidden');
+        btnMaterias.classList.add('active');
+        tituloPanel.textContent = 'Catálogo de materias';
+        cargarMaterias();
+      }
+    }
+
+    btnClientes.addEventListener('click', () => activarPanel('clientes'));
+    btnTutores.addEventListener('click', () => activarPanel('tutores'));
+    btnMaterias.addEventListener('click', () => activarPanel('materias'));
+
+ 
+    const tbodyClientes = document.getElementById('tbodyClientes');
+    const clienteForm = document.getElementById('clienteForm');
+    const infoClientes = document.getElementById('infoClientes');
+
+    const inputClienteId = document.getElementById('clienteId');
+    const inputNombre = document.getElementById('nombreInput');
+    const inputEmail = document.getElementById('emailInput');
+    const inputTel = document.getElementById('telefonoInput');
+
+    let editandoCliente = false;
+
+    async function cargarClientes() {
+      tbodyClientes.innerHTML = '<tr><td colspan="5">Cargando...</td></tr>';
+      try {
+        const res = await fetch('/api/clientes');
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          tbodyClientes.innerHTML = '<tr><td colspan="5">No hay clientes registrados.</td></tr>';
+          return;
+        }
+        tbodyClientes.innerHTML = data.map(c => `
+          <tr>
+            <td>${c.id}</td>
+            <td>${c.nombre_completo}</td>
+            <td>${c.email}</td>
+            <td>${c.telefono || '-'}</td>
+            <td class="actions">
+              <button class="btn-edit" onclick="editarCliente(${c.id}, '${c.nombre_completo}', '${c.email}', '${c.telefono || ''}')">Editar</button>
+              <button class="btn-delete" onclick="eliminarCliente(${c.id})">Eliminar</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch {
+        tbodyClientes.innerHTML = '<tr><td colspan="5">Error al cargar clientes.</td></tr>';
+      }
+    }
+
+    clienteForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        nombre_completo: inputNombre.value,
+        email: inputEmail.value,
+        telefono: inputTel.value
+      };
+      try {
+        let res;
+        if (editandoCliente && inputClienteId.value) {
+          res = await fetch('/api/clientes/' + inputClienteId.value, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          res = await fetch('/api/clientes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+        const data = await res.json();
+        if (!res.ok) {
+          infoClientes.textContent = data.error || 'Ocurrió un error';
+          infoClientes.style.color = '#c0392b';
+        } else {
+          infoClientes.textContent = editandoCliente
+            ? 'Cliente actualizado correctamente.'
+            : 'Cliente creado correctamente.';
+          infoClientes.style.color = '#27ae60';
+          resetClienteForm();
+          cargarClientes();
+        }
+      } catch {
+        infoClientes.textContent = 'Error de conexión.';
+        infoClientes.style.color = '#c0392b';
+      }
+    });
+
+    function editarCliente(id, nombre, email, tel) {
+      editandoCliente = true;
+      inputClienteId.value = id;
+      inputNombre.value = nombre;
+      inputEmail.value = email;
+      inputTel.value = tel;
+      infoClientes.textContent = 'Editando cliente ' + id;
+      infoClientes.style.color = '#555';
+    }
+
+    async function eliminarCliente(id) {
+      if (!confirm('¿Eliminar cliente ' + id + '?')) return;
+      try {
+        const res = await fetch('/api/clientes/' + id, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || 'No se pudo eliminar');
+        } else {
+          alert('Cliente eliminado');
+          cargarClientes();
+        }
+      } catch {
+        alert('Error de conexión');
+      }
+    }
+
+    function resetClienteForm() {
+      editandoCliente = false;
+      inputClienteId.value = '';
+      inputNombre.value = '';
+      inputEmail.value = '';
+      inputTel.value = '';
+    }
+
+    window.editarCliente = editarCliente;
+    window.eliminarCliente = eliminarCliente;
+
+   
+    const tbodyTutores = document.getElementById('tbodyTutores');
+    const tutorForm = document.getElementById('tutorForm');
+    const infoTutores = document.getElementById('infoTutores');
+
+    const tutorId = document.getElementById('tutorId');
+    const tutorNombreInput = document.getElementById('tutorNombre');
+    const tutorEmailInput = document.getElementById('tutorEmail');
+    const tutorTelInput = document.getElementById('tutorTelefono');
+    const tutorPrecioInput = document.getElementById('tutorPrecio');
+    const tutorDescInput = document.getElementById('tutorDesc');
+
+    let editandoTutor = false;
+
+    async function cargarTutores() {
+      tbodyTutores.innerHTML = '<tr><td colspan="6">Cargando...</td></tr>';
+      try {
+        const res = await fetch('/api/tutores');
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          tbodyTutores.innerHTML = '<tr><td colspan="6">No hay tutores registrados.</td></tr>';
+          return;
+        }
+        tbodyTutores.innerHTML = data.map(t => `
+          <tr>
+            <td>${t.id}</td>
+            <td>${t.nombre_completo}</td>
+            <td>${t.email}</td>
+            <td>${t.telefono || '-'}</td>
+            <td>${t.precio_hora || '-'}</td>
+            <td class="actions">
+              <button class="btn-edit" onclick="editarTutor(${t.id}, '${t.nombre_completo}', '${t.email}', '${t.telefono || ''}', '${t.precio_hora || ''}', '${(t.descripcion || '').replace(/'/g,"&#39;")}')">Editar</button>
+              <button class="btn-delete" onclick="eliminarTutor(${t.id})">Eliminar</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch {
+        tbodyTutores.innerHTML = '<tr><td colspan="6">Error al cargar tutores.</td></tr>';
+      }
+    }
+
+    tutorForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        nombre_completo: tutorNombreInput.value,
+        email: tutorEmailInput.value,
+        telefono: tutorTelInput.value,
+        precio_hora: tutorPrecioInput.value,
+        descripcion: tutorDescInput.value
+      };
+      try {
+        let res;
+        if (editandoTutor && tutorId.value) {
+          res = await fetch('/api/tutores/' + tutorId.value, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          res = await fetch('/api/tutores', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+        const data = await res.json();
+        if (!res.ok) {
+          infoTutores.textContent = data.error || 'Ocurrió un error';
+          infoTutores.style.color = '#c0392b';
+        } else {
+          infoTutores.textContent = editandoTutor
+            ? 'Tutor actualizado correctamente.'
+            : 'Tutor creado correctamente.';
+          infoTutores.style.color = '#27ae60';
+          resetTutorForm();
+          cargarTutores();
+        }
+      } catch {
+        infoTutores.textContent = 'Error de conexión.';
+        infoTutores.style.color = '#c0392b';
+      }
+    });
+
+    function editarTutor(id, nombre, email, tel, precio, desc) {
+      editandoTutor = true;
+      tutorId.value = id;
+      tutorNombreInput.value = nombre;
+      tutorEmailInput.value = email;
+      tutorTelInput.value = tel;
+      tutorPrecioInput.value = precio;
+      tutorDescInput.value = desc.replace(/&#39;/g, "'");
+      infoTutores.textContent = 'Editando tutor ' + id;
+      infoTutores.style.color = '#555';
+    }
+
+    async function eliminarTutor(id) {
+      if (!confirm('¿Eliminar tutor ' + id + '?')) return;
+      try {
+        const res = await fetch('/api/tutores/' + id, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || 'No se pudo eliminar');
+        } else {
+          alert('Tutor eliminado');
+          cargarTutores();
+        }
+      } catch {
+        alert('Error de conexión');
+      }
+    }
+
+    function resetTutorForm() {
+      editandoTutor = false;
+      tutorId.value = '';
+      tutorNombreInput.value = '';
+      tutorEmailInput.value = '';
+      tutorTelInput.value = '';
+      tutorPrecioInput.value = '';
+      tutorDescInput.value = '';
+    }
+
+    window.editarTutor = editarTutor;
+    window.eliminarTutor = eliminarTutor;
+
+
+    const tbodyMaterias = document.getElementById('tbodyMaterias');
+    const materiaForm = document.getElementById('materiaForm');
+    const infoMaterias = document.getElementById('infoMaterias');
+
+    const materiaId = document.getElementById('materiaId');
+    const materiaNombre = document.getElementById('materiaNombre');
+    const materiaDesc = document.getElementById('materiaDesc');
+
+    let editandoMateria = false;
+
+    async function cargarMaterias() {
+      tbodyMaterias.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
+      try {
+        const res = await fetch('/api/materias');
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          tbodyMaterias.innerHTML = '<tr><td colspan="4">No hay materias registradas.</td></tr>';
+          return;
+        }
+        tbodyMaterias.innerHTML = data.map(m => `
+          <tr>
+            <td>${m.id}</td>
+            <td>${m.nombre}</td>
+            <td>${m.descripcion || '-'}</td>
+            <td class="actions">
+              <button class="btn-edit" onclick="editarMateria(${m.id}, '${m.nombre}', '${(m.descripcion || '').replace(/'/g,"&#39;")}')">Editar</button>
+              <button class="btn-delete" onclick="eliminarMateria(${m.id})">Eliminar</button>
+            </td>
+          </tr>
+        `).join('');
+      } catch {
+        tbodyMaterias.innerHTML = '<tr><td colspan="4">Error al cargar materias.</td></tr>';
+      }
+    }
+
+    materiaForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        nombre: materiaNombre.value,
+        descripcion: materiaDesc.value
+      };
+      try {
+        let res;
+        if (editandoMateria && materiaId.value) {
+          res = await fetch('/api/materias/' + materiaId.value, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } else {
+          res = await fetch('/api/materias', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        }
+        const data = await res.json();
+        if (!res.ok) {
+          infoMaterias.textContent = data.error || 'Ocurrió un error';
+          infoMaterias.style.color = '#c0392b';
+        } else {
+          infoMaterias.textContent = editandoMateria
+            ? 'Materia actualizada correctamente.'
+            : 'Materia creada correctamente.';
+          infoMaterias.style.color = '#27ae60';
+          resetMateriaForm();
+          cargarMaterias();
+        }
+      } catch {
+        infoMaterias.textContent = 'Error de conexión.';
+        infoMaterias.style.color = '#c0392b';
+      }
+    });
+
+    function editarMateria(id, nombre, desc) {
+      editandoMateria = true;
+      materiaId.value = id;
+      materiaNombre.value = nombre;
+      materiaDesc.value = desc.replace(/&#39;/g, "'");
+      infoMaterias.textContent = 'Editando materia ' + id;
+      infoMaterias.style.color = '#555';
+    }
+
+    async function eliminarMateria(id) {
+      if (!confirm('¿Eliminar materia ' + id + '?')) return;
+      try {
+        const res = await fetch('/api/materias/' + id, { method: 'DELETE' });
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.error || 'No se pudo eliminar');
+        } else {
+          alert('Materia eliminado');
+          cargarMaterias();
+        }
+      } catch {
+        alert('Error de conexión');
+      }
+    }
+
+    function resetMateriaForm() {
+      editandoMateria = false;
+      materiaId.value = '';
+      materiaNombre.value = '';
+      materiaDesc.value = '';
+    }
+
+    window.editarMateria = editarMateria;
+    window.eliminarMateria = eliminarMateria;
+
+ 
+    activarPanel('clientes');
+  </script>
+</body>
+</html>
